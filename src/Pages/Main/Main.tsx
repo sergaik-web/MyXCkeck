@@ -5,12 +5,13 @@ import Navbar from './Navbar/Navbar';
 import Header from '../../Components/Header/Header';
 import './Main.scss';
 
-const Main: React.FC = () => {
-  // const { userName }: any = state;
+// const Main: React.FC = (state) => {
+// const { userName }: any = state;
 
-  // if (!userName) {
-  //   return <Auth />;
-  // }
+// if (!userName) {
+//   return <Auth />;
+// }
+const Main: React.FC = () => {
   return (
     <div className="main">
       <Header />

@@ -59,8 +59,9 @@ module.exports = {
     ],
     'no-underscore-dangle': ['error', { allow: ['id_', '_id'] }],
     'max-len': ['error', 100, 2, { ignoreUrls: true }],
-    'no-console': 'warn',
-    'no-alert': 'error',
+    'no-console': 'off',
+    'no-alert': 'off',
+    'spaced-comment': 'off',
 
     'no-param-reassign': 'off',
     radix: 'off',

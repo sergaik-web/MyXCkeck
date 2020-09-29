@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Modal, Input, message } from 'antd';
+import { Form, Modal, message } from 'antd';
 import { useHistory } from 'react-router';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import refactorImportSubTasks from '../../../../Scripts/refactorImportSubTasks';
+import ImportModal from './ImportModal/ImportModal';
+// import refactorImportSubTasks from '../../../../Scripts/refactorImportSubTasks';
 import TaskMainInfo from '../TaskMainInfo/TaskMainInfo';
 import TaskDescription from '../TaskDescription/TaskDescription';
 import TaskSubTasks from '../TaskSubTasks/TaskSubTasks';
@@ -26,6 +27,7 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   const history = useHistory();
   const { service, editTaskMode, editTaskName } = props;
   const [form] = Form.useForm();
+  const [showModal, setShowModal] = useState(true);
   const [showModalJson, setShowModalJson] = useState(false);
   const [showModalMarkdown, setShowModalMarkdown] = useState(false);
   const [showModalRss, setShowModalRss] = useState(false);
@@ -130,6 +132,13 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
     setShowModalRss(true);
   };
 
+  const onCancelModal = (text: string) => {
+    setShowModal(false);
+    console.log(text);
+  };
+
+  console.log(showModalJson, showModalMarkdown, showModalRss);
+
   return (
     <Form
       form={form}
@@ -150,71 +159,80 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
       <TaskDescription getInstans={getInstans} description={task.description} />
       <TaskSubTasks />
       <TaskSubmitButton editMode={editMode} />
-      <Modal
-        title="Insert your task in Json format"
-        visible={showModalJson}
-        onOk={() => {
-          const importTask = JSON.parse(
-            (document.getElementById('importJson') as HTMLInputElement).value
-          );
-          setTask(importTask);
-          form.setFieldsValue({
-            taskName: importTask.name,
-            authorName: importTask.author,
-            typeState: importTask.state,
-            tasks: importTask.subTasks,
-          });
-          setShowModalJson(false);
-        }}
-        onCancel={() => setShowModalJson(false)}
-        okText="OK"
-        cancelText="Cancel"
-      >
-        <Input.TextArea rows={4} id="importJson" />
-      </Modal>
-      <Modal
-        title="Insert your task in Markdown format"
-        visible={showModalMarkdown}
-        onOk={() => {
-          const importTask = (document.getElementById('importMarkdown') as HTMLInputElement).value;
-          setTask({
-            ...task,
-            description: importTask,
-          });
-          setShowModalMarkdown(false);
-        }}
-        onCancel={() => setShowModalMarkdown(false)}
-        okText="OK"
-        cancelText="Cancel"
-      >
-        <Input.TextArea rows={4} id="importMarkdown" />
-      </Modal>
-      <Modal
-        title="Insert your task in RSS CheckList format"
-        visible={showModalRss}
-        onOk={() => {
-          const importTask = JSON.parse(
-            (document.getElementById('importRss') as HTMLInputElement).value
-          );
-          const importSubTasks = refactorImportSubTasks(importTask);
-          setTask({
-            ...task,
-            description: importTask.information ? importTask.information : task.description,
-            name: importTask.taskName,
-            subTasks: importSubTasks,
-          });
-          form.setFieldsValue({
-            taskName: importTask.taskName,
-            tasks: importSubTasks,
-          });
-          setShowModalRss(false);
-        }}
-        onCancel={() => setShowModalRss(false)}
-        okText="OK"
-        cancelText="Cancel"
-      >
-        <Input.TextArea rows={4} id="importRss" />
-      </Modal>
+      <ImportModal
+        title="TEST"
+        importType="TEST"
+        form={form}
+        visible={showModal}
+        onOkModal={() => {}}
+        onCancelModal={(e: string) => onCancelModal(e)}
+      />
+      {/*<Modal*/}
+      {/*  title="Insert your task in Json format"*/}
+      {/*  visible={showModalJson}*/}
+      {/*  onOk={() => {*/}
+      {/*    const importTask = JSON.parse(*/}
+      {/*      (document.getElementById('importJson') as HTMLInputElement).value*/}
+      {/*    );*/}
+      {/*    setTask(importTask);*/}
+      {/*    form.setFieldsValue({*/}
+      {/*      taskName: importTask.name,*/}
+      {/*      authorName: importTask.author,*/}
+      {/*      typeState: importTask.state,*/}
+      {/*      tasks: importTask.subTasks,*/}
+      {/*    });*/}
+      {/*    setShowModalJson(false);*/}
+      {/*  }}*/}
+      {/*  onCancel={() => setShowModalJson(false)}*/}
+      {/*  okText="OK"*/}
+      {/*  cancelText="Cancel"*/}
+      {/*>*/}
+      {/*  <Input.TextArea rows={4} id="importJson" />*/}
+      {/*</Modal>*/}
+      {/*<Modal*/}
+      {/*  title="Insert your task in Markdown format"*/}
+      {/*  visible={showModalMarkdown}*/}
+      {/*  onOk={() => {*/}
+      {/* eslint-disable-next-line max-len */}
+      {/*    const importTask = (document.getElementById('importMarkdown') as HTMLInputElement).value;*/}
+      {/*    setTask({*/}
+      {/*      ...task,*/}
+      {/*      description: importTask,*/}
+      {/*    });*/}
+      {/*    setShowModalMarkdown(false);*/}
+      {/*  }}*/}
+      {/*  onCancel={() => setShowModalMarkdown(false)}*/}
+      {/*  okText="OK"*/}
+      {/*  cancelText="Cancel"*/}
+      {/*>*/}
+      {/*  <Input.TextArea rows={4} id="importMarkdown" />*/}
+      {/*</Modal>*/}
+      {/*<Modal*/}
+      {/*  title="Insert your task in RSS CheckList format"*/}
+      {/*  visible={showModalRss}*/}
+      {/*  onOk={() => {*/}
+      {/*    const importTask = JSON.parse(*/}
+      {/*      (document.getElementById('importRss') as HTMLInputElement).value*/}
+      {/*    );*/}
+      {/*    const importSubTasks = refactorImportSubTasks(importTask);*/}
+      {/*    setTask({*/}
+      {/*      ...task,*/}
+      {/*      description: importTask.information ? importTask.information : task.description,*/}
+      {/*      name: importTask.taskName,*/}
+      {/*      subTasks: importSubTasks,*/}
+      {/*    });*/}
+      {/*    form.setFieldsValue({*/}
+      {/*      taskName: importTask.taskName,*/}
+      {/*      tasks: importSubTasks,*/}
+      {/*    });*/}
+      {/*    setShowModalRss(false);*/}
+      {/*  }}*/}
+      {/*  onCancel={() => setShowModalRss(false)}*/}
+      {/*  okText="OK"*/}
+      {/*  cancelText="Cancel"*/}
+      {/*>*/}
+      {/*  <Input.TextArea rows={4} id="importRss" />*/}
+      {/*</Modal>*/}
     </Form>
   );
 };
