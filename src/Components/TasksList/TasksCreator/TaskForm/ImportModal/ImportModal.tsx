@@ -2,7 +2,6 @@ import React from 'react';
 import { Input, Modal } from 'antd';
 
 interface ImportModalProps {
-  title: string;
   importType: string;
   visible: boolean;
   form: any;
@@ -10,20 +9,13 @@ interface ImportModalProps {
   onCancelModal: any;
 }
 
-const ImportModal = ({
-  title,
-  importType,
-  visible,
-  form,
-  onOkModal,
-  onCancelModal,
-}: ImportModalProps) => {
+const ImportModal = ({ importType, visible, form, onOkModal, onCancelModal }: ImportModalProps) => {
   return (
     <Modal
-      title={title}
+      title={`Insert your task in ${importType} format`}
       visible={visible}
       onOk={() => onOkModal(importType)}
-      onCancel={() => onCancelModal(importType)}
+      onCancel={() => onCancelModal()}
       okText="OK"
       cancelText="Cancel"
     >

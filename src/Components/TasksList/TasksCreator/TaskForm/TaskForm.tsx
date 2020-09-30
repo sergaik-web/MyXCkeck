@@ -3,7 +3,7 @@ import { Form, Modal, message } from 'antd';
 import { useHistory } from 'react-router';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ImportModal from './ImportModal/ImportModal';
-// import refactorImportSubTasks from '../../../../Scripts/refactorImportSubTasks';
+import refactorImportSubTasks from '../../../../Scripts/refactorImportSubTasks';
 import TaskMainInfo from '../TaskMainInfo/TaskMainInfo';
 import TaskDescription from '../TaskDescription/TaskDescription';
 import TaskSubTasks from '../TaskSubTasks/TaskSubTasks';
@@ -27,10 +27,8 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   const history = useHistory();
   const { service, editTaskMode, editTaskName } = props;
   const [form] = Form.useForm();
-  const [showModal, setShowModal] = useState(true);
-  const [showModalJson, setShowModalJson] = useState(false);
-  const [showModalMarkdown, setShowModalMarkdown] = useState(false);
-  const [showModalRss, setShowModalRss] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('');
   const [editMode, setEditMode] = useState(editTaskMode);
   const [editName, setEditName] = useState(editTaskName);
   const [task, setTask] = useState({
@@ -61,38 +59,42 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   }, [editMode, editName, service, form]);
 
   const onFinish = (values: { [key: string]: any }) => {
-    confirm({
-      title: 'Back to the list of tasks?',
-      icon: <ExclamationCircleOutlined />,
-      content: 'Do you want to go back to the full list of all assignments, or continue editing?',
-      okText: 'Back to Tasks List',
-      cancelText: 'Continue Editing',
-      onOk() {
-        const description = valueMde.value();
-        const taskEssence = createEssence(values, description);
-        if (editMode) {
-          service.putTask(taskEssence, editName);
-        } else {
-          service.postNewTask(taskEssence).then((e: any) => {
-            setEditMode(true);
-            setEditName(e.name);
-          });
-        }
-        setTimeout(() => history.push('/tasks-list'), 500);
-      },
-      onCancel() {
-        const description = valueMde.value();
-        const taskEssence = createEssence(values, description);
-        if (editMode) {
-          service.putTask(taskEssence, editName);
-        } else {
-          service.postNewTask(taskEssence).then((e: any) => {
-            setEditMode(true);
-            setEditName(e.name);
-          });
-        }
-      },
-    });
+    if (values.tasks || values.tasks.lenght === 0) {
+      confirm({
+        title: 'Back to the list of tasks?',
+        icon: <ExclamationCircleOutlined />,
+        content: 'Do you want to go back to the full list of all assignments, or continue editing?',
+        okText: 'Back to Tasks List',
+        cancelText: 'Continue Editing',
+        onOk() {
+          const description = valueMde.value();
+          const taskEssence = createEssence(values, description);
+          if (editMode) {
+            service.putTask(taskEssence, editName);
+          } else {
+            service.postNewTask(taskEssence).then((e: any) => {
+              setEditMode(true);
+              setEditName(e.name);
+            });
+          }
+          setTimeout(() => history.push('/tasks-list'), 500);
+        },
+        onCancel() {
+          const description = valueMde.value();
+          const taskEssence = createEssence(values, description);
+          if (editMode) {
+            service.putTask(taskEssence, editName);
+          } else {
+            service.postNewTask(taskEssence).then((e: any) => {
+              setEditMode(true);
+              setEditName(e.name);
+            });
+          }
+        },
+      });
+    } else {
+      message.error('Create subtasks');
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -121,23 +123,64 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   };
 
   const importJson = () => {
-    setShowModalJson(true);
+    setModalType('Json');
+    setShowModal(true);
   };
 
   const importMarkdown = () => {
-    setShowModalMarkdown(true);
+    setModalType('Markdown');
+    setShowModal(true);
   };
 
   const importRss = () => {
-    setShowModalRss(true);
+    setModalType('Rss');
+    setShowModal(true);
   };
 
-  const onCancelModal = (text: string) => {
+  const onOkModal = (importType: string) => {
     setShowModal(false);
-    console.log(text);
+    let importTask;
+    let importSubTasks;
+    switch (importType) {
+      case 'Json':
+        importTask = JSON.parse((document.getElementById(importType) as HTMLInputElement).value);
+        setTask(importTask);
+        form.setFieldsValue({
+          taskName: importTask.name,
+          authorName: importTask.author,
+          typeState: importTask.state,
+          tasks: importTask.subTasks,
+        });
+        break;
+      case 'Markdown':
+        importTask = (document.getElementById(importType) as HTMLInputElement).value;
+        setTask({
+          ...task,
+          description: importTask,
+        });
+        break;
+      case 'Rss':
+        importTask = JSON.parse((document.getElementById(importType) as HTMLInputElement).value);
+        importSubTasks = refactorImportSubTasks(importTask);
+        setTask({
+          ...task,
+          description: importTask.information ? importTask.information : task.description,
+          name: importTask.taskName,
+          subTasks: importSubTasks,
+        });
+        form.setFieldsValue({
+          taskName: importTask.taskName,
+          tasks: importSubTasks,
+        });
+        break;
+      default:
+        break;
+    }
   };
 
-  console.log(showModalJson, showModalMarkdown, showModalRss);
+  const onCancelModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <Form
@@ -160,79 +203,12 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
       <TaskSubTasks />
       <TaskSubmitButton editMode={editMode} />
       <ImportModal
-        title="TEST"
-        importType="TEST"
+        importType={modalType}
         form={form}
         visible={showModal}
-        onOkModal={() => {}}
-        onCancelModal={(e: string) => onCancelModal(e)}
+        onOkModal={(importType: string) => onOkModal(importType)}
+        onCancelModal={onCancelModal}
       />
-      {/*<Modal*/}
-      {/*  title="Insert your task in Json format"*/}
-      {/*  visible={showModalJson}*/}
-      {/*  onOk={() => {*/}
-      {/*    const importTask = JSON.parse(*/}
-      {/*      (document.getElementById('importJson') as HTMLInputElement).value*/}
-      {/*    );*/}
-      {/*    setTask(importTask);*/}
-      {/*    form.setFieldsValue({*/}
-      {/*      taskName: importTask.name,*/}
-      {/*      authorName: importTask.author,*/}
-      {/*      typeState: importTask.state,*/}
-      {/*      tasks: importTask.subTasks,*/}
-      {/*    });*/}
-      {/*    setShowModalJson(false);*/}
-      {/*  }}*/}
-      {/*  onCancel={() => setShowModalJson(false)}*/}
-      {/*  okText="OK"*/}
-      {/*  cancelText="Cancel"*/}
-      {/*>*/}
-      {/*  <Input.TextArea rows={4} id="importJson" />*/}
-      {/*</Modal>*/}
-      {/*<Modal*/}
-      {/*  title="Insert your task in Markdown format"*/}
-      {/*  visible={showModalMarkdown}*/}
-      {/*  onOk={() => {*/}
-      {/* eslint-disable-next-line max-len */}
-      {/*    const importTask = (document.getElementById('importMarkdown') as HTMLInputElement).value;*/}
-      {/*    setTask({*/}
-      {/*      ...task,*/}
-      {/*      description: importTask,*/}
-      {/*    });*/}
-      {/*    setShowModalMarkdown(false);*/}
-      {/*  }}*/}
-      {/*  onCancel={() => setShowModalMarkdown(false)}*/}
-      {/*  okText="OK"*/}
-      {/*  cancelText="Cancel"*/}
-      {/*>*/}
-      {/*  <Input.TextArea rows={4} id="importMarkdown" />*/}
-      {/*</Modal>*/}
-      {/*<Modal*/}
-      {/*  title="Insert your task in RSS CheckList format"*/}
-      {/*  visible={showModalRss}*/}
-      {/*  onOk={() => {*/}
-      {/*    const importTask = JSON.parse(*/}
-      {/*      (document.getElementById('importRss') as HTMLInputElement).value*/}
-      {/*    );*/}
-      {/*    const importSubTasks = refactorImportSubTasks(importTask);*/}
-      {/*    setTask({*/}
-      {/*      ...task,*/}
-      {/*      description: importTask.information ? importTask.information : task.description,*/}
-      {/*      name: importTask.taskName,*/}
-      {/*      subTasks: importSubTasks,*/}
-      {/*    });*/}
-      {/*    form.setFieldsValue({*/}
-      {/*      taskName: importTask.taskName,*/}
-      {/*      tasks: importSubTasks,*/}
-      {/*    });*/}
-      {/*    setShowModalRss(false);*/}
-      {/*  }}*/}
-      {/*  onCancel={() => setShowModalRss(false)}*/}
-      {/*  okText="OK"*/}
-      {/*  cancelText="Cancel"*/}
-      {/*>*/}
-      {/*  <Input.TextArea rows={4} id="importRss" />*/}
-      {/*</Modal>*/}
     </Form>
   );
 };

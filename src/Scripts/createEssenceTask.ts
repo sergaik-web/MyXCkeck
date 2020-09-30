@@ -13,7 +13,7 @@ const createEssence = (valueForm: any, description: any) => {
       title: task.title,
       category: task.category,
       mentorCheck: task.mentorCheck,
-      description: task.description,
+      description: task.description ? task.description : '',
       score: Number(task.score),
     };
     return formatTask;

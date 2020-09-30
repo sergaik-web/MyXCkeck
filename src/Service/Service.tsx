@@ -18,15 +18,20 @@ function normalizeSubTask<T>(subTask: T, index: number) {
 }
 
 function normalizeTask(task: Task) {
+  if (task.subTasks) {
+    return {
+      ...task,
+      subTasks: Object.values(task.subTasks)
+        .map(normalizeSubTask)
+        .map((el) => ({
+          ...el,
+          maxScore: el.score < 0 ? 0 : el.score,
+          minScore: Math.min(0, el.score),
+        })),
+    };
+  }
   return {
     ...task,
-    subTasks: Object.values(task.subTasks)
-      .map(normalizeSubTask)
-      .map((el) => ({
-        ...el,
-        maxScore: el.score < 0 ? 0 : el.score,
-        minScore: Math.min(0, el.score),
-      })),
   };
 }
 

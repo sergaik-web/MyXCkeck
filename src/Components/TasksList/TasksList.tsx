@@ -97,14 +97,15 @@ const TasksList: React.FC<allTasksType> = (props) => {
       key: 'subTasks',
       render: (subTasks: string | any[]) => {
         let score = 0;
-        if (typeof subTasks !== 'string') {
+        if (typeof subTasks !== 'string' && subTasks) {
           for (let i: any = 0; i < subTasks.length; i++) {
             if (subTasks[i].score > 0) {
               score += subTasks[i].score;
             }
           }
+          return <p key={subTasks.length}>{score}</p>;
         }
-        return <p key={subTasks.length}>{score}</p>;
+        return <p>{score}</p>;
       },
     },
     {
