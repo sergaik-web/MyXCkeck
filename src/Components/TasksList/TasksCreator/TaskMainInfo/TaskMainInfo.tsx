@@ -15,6 +15,30 @@ const TaskMainInfo: React.FC<TasksMainInfoProps> = (props) => {
   const { userName, exportJson, importJson, importMarkdown, importRss } = props;
   const { Option } = Select;
   const taskStates = ['DRAFT', 'PUBLISHED', 'ARCHIVED'];
+  const buttonName: Array<string> = [
+    'Import RSS Checklist',
+    'Import Markdown',
+    'Import Json',
+    'Export Json',
+  ];
+  const buttonFunc: Array<any> = [importRss, importMarkdown, importJson, exportJson];
+
+  const MainPanelButton: any = () => {
+    return buttonName.map((name, index) => {
+      return (
+        <Button
+          key={`${name}_button`}
+          size="small"
+          type={name === 'Export Json' ? 'primary' : 'dashed'}
+          shape="round"
+          style={{ marginBottom: '14px', width: '300px' }}
+          onClick={() => buttonFunc[index]()}
+        >
+          {name}
+        </Button>
+      );
+    });
+  };
 
   return (
     <Row>
@@ -50,44 +74,7 @@ const TaskMainInfo: React.FC<TasksMainInfoProps> = (props) => {
         </Form.Item>
       </Col>
       <Col span={8} offset={4}>
-        <Button
-          size="small"
-          type="dashed"
-          shape="round"
-          style={{ marginBottom: '14px', width: '300px' }}
-          onClick={() => importRss()}
-        >
-          Import RSS Checklist
-        </Button>
-        <br />
-        <Button
-          size="small"
-          type="dashed"
-          shape="round"
-          style={{ marginBottom: '14px', width: '300px' }}
-          onClick={() => importMarkdown()}
-        >
-          Import Markdown
-        </Button>
-        <br />
-        <Button
-          size="small"
-          type="primary"
-          shape="round"
-          style={{ marginBottom: '14px', width: '300px' }}
-          onClick={() => importJson()}
-        >
-          Import Json
-        </Button>
-        <Button
-          size="small"
-          type="primary"
-          shape="round"
-          style={{ marginBottom: '14px', width: '300px' }}
-          onClick={() => exportJson()}
-        >
-          Export Json
-        </Button>
+        <MainPanelButton />
       </Col>
     </Row>
   );
