@@ -2,7 +2,7 @@ import { Button, Table } from 'antd';
 import { DiffOutlined, CloudSyncOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import tasksListColumns from './tasksListColumns';
+import tasksListColumns from '../tasksListColumns';
 
 const TasksTable = (props: any) => {
   const { userName, userRole, onDeleteTask, allTasks, onUpdateTaskList } = props;

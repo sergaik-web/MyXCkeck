@@ -7,7 +7,7 @@ import CheckSession from '../CheckSession/CheckSession';
 import SessionsList from '../CheckSession/SessionsList/SessionsList';
 import TasksList from '../TasksList/TasksList';
 import { TaskReview } from '../TaskReview/TaskReview';
-import TasksCreator from '../TasksList/TasksCreator/TasksCreator';
+import TasksCreator from '../TasksCreator/TasksCreator';
 import Main from '../../Pages/Main/Main';
 import SelectingTask from '../SelectingTask/SelectingTask';
 import ReviewRequests from '../../Pages/ReviewRequests/ReviewRequests';

@@ -4,12 +4,11 @@ import { Input, Modal } from 'antd';
 interface ImportModalProps {
   importType: string;
   visible: boolean;
-  form: any;
   onOkModal: any;
   onCancelModal: any;
 }
 
-const ImportModal = ({ importType, visible, form, onOkModal, onCancelModal }: ImportModalProps) => {
+const ImportModal = ({ importType, visible, onOkModal, onCancelModal }: ImportModalProps) => {
   return (
     <Modal
       title={`Insert your task in ${importType} format`}

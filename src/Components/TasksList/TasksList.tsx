@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Modal } from 'antd';
+import deleteTask from '../../Scripts/deleteTask';
 import updateTaskList from '../../Scripts/updateTaskList';
-import TasksTable from './TaskTable';
+import TasksTable from './TaskTable/TaskTable';
 import Hoc from '../Hoc/Hoc';
 import Header from '../Header/Header';
 import classes from './TasksList.module.scss';
-
-const { confirm } = Modal;
 
 interface allTasksType {
   service: any;
@@ -25,19 +23,8 @@ const TasksList: React.FC<allTasksType> = (props) => {
   }, [service, setAllTask]);
 
   const onDeleteTask: any = (taskName: any) => {
-    confirm({
-      title: 'Are you sure delete this task?',
-      icon: <ExclamationCircleOutlined />,
-      content: 'A deleted task cannot be restored',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        service
-          .delTask(taskName)
-          .then(() => setTimeout(() => updateTaskList(service, setAllTask), 1500));
-      },
-    });
+    const icon = <ExclamationCircleOutlined />;
+    deleteTask(service, taskName, setAllTask, icon);
   };
 
   return (

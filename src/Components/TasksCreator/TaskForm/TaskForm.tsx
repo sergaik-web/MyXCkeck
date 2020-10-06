@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'antd';
 import { useHistory } from 'react-router';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ImportModal from './ImportModal/ImportModal';
-import exportJsonData from '../../../../Scripts/exportJsonData';
-import submitTask from '../../../../Scripts/submitTask';
-import setImportData from '../../../../Scripts/setImportData';
-import fillTaskForm from '../../../../Scripts/fillTaskForm';
+import exportJsonData from '../../../Scripts/exportJsonData';
+import submitTask from '../../../Scripts/submitTask';
+import setImportData from '../../../Scripts/setImportData';
+import fillTaskForm from '../../../Scripts/fillTaskForm';
 import TaskMainInfo from '../TaskMainInfo/TaskMainInfo';
 import TaskDescription from '../TaskDescription/TaskDescription';
 import TaskSubTasks from '../TaskSubTasks/TaskSubTasks';
 import TaskSubmitButton from '../TaskSubmitButton/TaskSubmitButton';
-import Hoc from '../../../Hoc/Hoc';
+import Hoc from '../../Hoc/Hoc';
 
 import classes from './TaskForm.module.scss';
 import 'antd/dist/antd.css';
@@ -46,7 +47,18 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   }, [editMode, editName, service, form]);
 
   const onFinish = (values: { [key: string]: any }) => {
-    submitTask(values, valueMde, editMode, editName, service, setEditMode, setEditName, history);
+    const icon = <ExclamationCircleOutlined />;
+    submitTask(
+      values,
+      valueMde,
+      editMode,
+      editName,
+      service,
+      setEditMode,
+      setEditName,
+      history,
+      icon
+    );
   };
 
   const onFinishFailed = (errorInfo: any) => {

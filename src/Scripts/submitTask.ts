@@ -1,4 +1,3 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { message, Modal } from 'antd';
 import createEssence from './createEssenceTask';
 
@@ -12,12 +11,13 @@ const submitTask = (
   service: any,
   setEditMode: any,
   setEditName: any,
-  history: any
+  history: any,
+  icon: any
 ) => {
   if (values.tasks || values.tasks.lenght === 0) {
     confirm({
       title: 'Back to the list of tasks?',
-      icon: ExclamationCircleOutlined,
+      icon,
       content: 'Do you want to go back to the full list of all assignments, or continue editing?',
       okText: 'Back to Tasks List',
       cancelText: 'Continue Editing',
