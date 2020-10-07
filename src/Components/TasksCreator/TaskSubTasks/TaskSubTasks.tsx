@@ -16,7 +16,6 @@ const TaskSubTasks: React.FC = () => {
                 <SubTasksItem key={field.key} field={field} taskTypes={taskTypes} remove={remove} />
               ))}
             </ol>
-
             <Form.Item>
               <Button
                 type="dashed"

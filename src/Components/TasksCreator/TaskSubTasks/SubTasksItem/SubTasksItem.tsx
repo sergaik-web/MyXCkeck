@@ -13,20 +13,15 @@ const SubTasksItem: React.FC<SubTasksItemTypes> = (props) => {
   const { field, taskTypes, remove } = props;
   const { Option } = Select;
   return (
-    <li
-      className={classes.subtaskListItem}
-      key={field.key}
-      style={{ borderBottom: 'solid 1px grey', marginTop: '15px' }}
-    >
+    <li className={classes.subtaskListItem} key={field.key}>
       <Form.Item
         {...field}
-        wrapperCol={{ span: 22 }}
         key={field.key}
         name={[field.name, 'subtask-item']}
         fieldKey={[field.fieldKey, 'subtask-item']}
       >
-        <Row justify="space-between">
-          <Col span={14} offset={1}>
+        <Row>
+          <Col span={12} offset={1}>
             <Form.Item
               name={[field.name, 'title']}
               rules={[{ required: true, message: 'Missing Subtask' }]}
@@ -39,51 +34,48 @@ const SubTasksItem: React.FC<SubTasksItemTypes> = (props) => {
               rules={[{ required: false }]}
               label="Description"
             >
-              <Input.TextArea placeholder="Description" autoSize={{ minRows: 4, maxRows: 10 }} />
+              <Input.TextArea placeholder="Description" autoSize={{ minRows: 1, maxRows: 10 }} />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item
-              style={{ marginLeft: '15px' }}
+              className={classes.marginLeft}
               name={[field.name, 'score']}
               rules={[{ required: true, message: 'Missing Cost' }]}
               label="Cost Subtask"
             >
               <Input type="number" placeholder="Cost" />
             </Form.Item>
-            <Form.Item
-              style={{ marginLeft: '15px' }}
-              name={[field.name, 'category']}
-              rules={[{ required: true, message: 'Missing Type Task' }]}
-              label="Type Task"
-            >
-              <Select showSearch placeholder="Select Type Task" optionFilterProp="children">
-                {taskTypes.map((taskType: any) => (
-                  <Option key={taskType} value={taskType}>
-                    {taskType}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              style={{ marginLeft: '15px' }}
-              valuePropName="checked"
-              name={[field.name, 'mentorCheck']}
-              initialValue={false}
-            >
-              <Checkbox>Only Mentor?</Checkbox>
-            </Form.Item>
+            <Row>
+              <Form.Item
+                className={classes.marginLeft}
+                name={[field.name, 'category']}
+                rules={[{ required: true, message: 'Missing Type Task' }]}
+                label="Type Task"
+              >
+                <Select showSearch placeholder="Select Type Task" optionFilterProp="children">
+                  {taskTypes.map((taskType: any) => (
+                    <Option key={taskType} value={taskType}>
+                      {taskType}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                className={classes.marginLeft}
+                valuePropName="checked"
+                name={[field.name, 'mentorCheck']}
+                initialValue={false}
+              >
+                <Checkbox>Only Mentor?</Checkbox>
+              </Form.Item>
+            </Row>
           </Col>
           <Col>
             <MinusCircleOutlined
+              className={classes.minusCircleOutlined}
               onClick={() => {
                 remove(field.name);
-              }}
-              style={{
-                marginLeft: '15px',
-                marginTop: '60px',
-                fontSize: '20px',
-                color: 'red',
               }}
             />
           </Col>

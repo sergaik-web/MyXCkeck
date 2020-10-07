@@ -15,7 +15,7 @@ import Hoc from '../../Hoc/Hoc';
 
 import classes from './TaskForm.module.scss';
 import 'antd/dist/antd.css';
-import './easymde.min.css';
+import 'easymde/dist/easymde.min.css';
 
 interface TasksFormProps {
   editTaskMode: boolean;
@@ -117,7 +117,6 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
       <TaskSubmitButton editMode={editMode} />
       <ImportModal
         importType={modalType}
-        form={form}
         visible={showModal}
         onOkModal={(importType: string) => onOkModal(importType)}
         onCancelModal={onCancelModal}
