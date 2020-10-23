@@ -7,6 +7,7 @@ import {
   DISPUTE_SELECT,
   REQUESTS,
   STOP_LOADING,
+  SET_TIMER,
 } from '../Actions/actionTypes';
 
 type stateType = {
@@ -15,6 +16,7 @@ type stateType = {
   selectedTaskId: null | string;
   checkSessionId: null | string;
   review: any;
+  timer: string;
 };
 
 export enum UserRoles {
@@ -174,6 +176,7 @@ const initialState: stateType = {
   selectedTaskId: null,
   checkSessionId: null,
   review: null,
+  timer: '00:00:00:00',
 };
 
 type XCheckActions = Action | AuthSuccessAction | SelectedTaskAction;
@@ -217,6 +220,11 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         ...action.payload,
+      };
+    case SET_TIMER:
+      return {
+        ...state,
+        timer: action.payload,
       };
 
     default:
