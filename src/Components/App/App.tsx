@@ -20,26 +20,18 @@ const App: React.FC = () => {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/authorization" component={Auth} />
+          <Route exact path="/" component={Main} />
           <Route exact path="/checksession/list" component={SessionsList} />
+          <Route path="/authorization" component={Auth} />
           <Route path="/checksession" component={CheckSession} />
-          <Route path="/dispute">
-            <DisputeSelector />
-          </Route>
-          <Route path="/tasks-list">
-            <TasksList />
-          </Route>
+          <Route path="/dispute" component={DisputeSelector} />
+          <Route path="/tasks-list" component={TasksList} />
           <Route path="/self-check" component={Selfcheck} />
-          <Route path="/task-review">
-            <TaskReview />
-          </Route>
+          <Route path="/task-review" component={TaskReview} />
           <Route path="/submit-task" component={SelectingTask} />
-          <Route path="/task-create">
-            <TasksCreator />
-          </Route>
+          <Route path="/task-create" component={TasksCreator} />
           <Route path="/score" component={Score} />
           <Route path="/review-requests" component={ReviewRequests} />
-          <Route exact path="/" component={Main} />
         </Switch>
       </Router>
     </div>

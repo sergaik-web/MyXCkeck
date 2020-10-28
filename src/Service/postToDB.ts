@@ -1,5 +1,5 @@
 const postToDB = async (path: any, data: any = {}) => {
-  const url = `https://x-check-9d19c.firebaseio.com/${path}.json`;
+  const url = `https://x-check-dc82a.firebaseio.com/${path}.json`;
   const res: any = await fetch(url, {
     method: 'POST',
     headers: {

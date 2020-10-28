@@ -1,6 +1,6 @@
 const putToDB = async (path: string, data: any) => {
   try {
-    const url = `https://x-check-9d19c.firebaseio.com/${path}.json`;
+    const url = `https://x-check-dc82a.firebaseio.com/${path}.json`;
     const res: any = await fetch(url, {
       method: 'PUT',
       headers: {

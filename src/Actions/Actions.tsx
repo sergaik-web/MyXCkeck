@@ -26,11 +26,4 @@ const changeReview = (currentReview: any) => {
   };
 };
 
-const setUserTimer = (timer: String) => {
-  return {
-    type: 'SET_TIMER',
-    payload: timer,
-  };
-};
-
-export { requests, changeSelectedTaskId, changeReview, setUserTimer };
+export { requests, changeSelectedTaskId, changeReview };

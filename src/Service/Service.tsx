@@ -6,7 +6,7 @@ import { CrossCheckSession, Review, Task, TaskScore, User } from '../Reducer/red
 const API_KEY = 'AIzaSyDzqqVu_zSTm33lzJmSTRwgNyTbUib_B2w';
 const app = firebase.initializeApp({
   apiKey: API_KEY,
-  databaseURL: 'https://x-check-9d19c.firebaseio.com/',
+  databaseURL: 'https://x-check-dc82a.firebaseio.com/',
 });
 const db = app.database();
 
