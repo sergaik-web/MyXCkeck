@@ -21,7 +21,7 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/checksession/list" component={SessionsList} />
+          <Route path="/checksession/list" component={SessionsList} />
           <Route path="/authorization" component={Auth} />
           <Route path="/checksession" component={CheckSession} />
           <Route path="/dispute" component={DisputeSelector} />
