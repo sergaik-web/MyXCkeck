@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button } from 'antd';
-import { Subtask } from './components/subtask/subtask';
+import { Subtask } from './ components/subtask/subtask';
 import { putToBD, getFromBD, postToBD } from './helpers';
 import Header from '../Header/Header';
 import './Selfcheck.scss';

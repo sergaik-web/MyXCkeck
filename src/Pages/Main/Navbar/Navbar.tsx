@@ -31,10 +31,13 @@ const Navbar: React.FC<navBarType> = (props) => {
 
   return (
     <div className="navbar">
-      <div style={{ width: 300 }}>
-        <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-        </Button>
+      <div>
+        <Button
+          type="primary"
+          onClick={toggleCollapsed}
+          style={{ marginBottom: 16 }}
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        />
         <Menu
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}

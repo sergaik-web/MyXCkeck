@@ -5,7 +5,6 @@ import deleteTask from '../../Scripts/deleteTask';
 import updateTaskList from '../../Scripts/updateTaskList';
 import TasksTable from './TaskTable/TaskTable';
 import Hoc from '../Hoc/Hoc';
-import Header from '../Header/Header';
 import classes from './TasksList.module.scss';
 
 interface allTasksType {
@@ -29,7 +28,6 @@ const TasksList: React.FC<allTasksType> = (props) => {
 
   return (
     <div className={classes.allTasks}>
-      <Header />
       <TasksTable
         userName={userName}
         userRole={userRole}

@@ -8,7 +8,7 @@ const TasksTable = (props: any) => {
   const { userName, userRole, onDeleteTask, allTasks, onUpdateTaskList } = props;
   return (
     <Table
-      pagination={{ position: ['bottomCenter'] }}
+      pagination={{ position: ['bottomCenter'], pageSize: 6 }}
       bordered
       size="small"
       columns={tasksListColumns(userName, userRole, onDeleteTask)}
