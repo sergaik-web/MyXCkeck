@@ -35,8 +35,14 @@ const Navbar: React.FC<navBarType> = (props) => {
         <Button
           type="primary"
           onClick={toggleCollapsed}
-          style={{ marginBottom: 16 }}
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          style={{ marginBottom: 16, width: '100%' }}
+          icon={
+            collapsed ? (
+              <MenuUnfoldOutlined style={{ fontSize: 26 }} />
+            ) : (
+              <MenuFoldOutlined style={{ fontSize: 26 }} />
+            )
+          }
         />
         <Menu
           defaultSelectedKeys={['1']}

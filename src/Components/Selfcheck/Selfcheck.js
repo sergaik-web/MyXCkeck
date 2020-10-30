@@ -2,9 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button } from 'antd';
-import { Subtask } from './ components/subtask/subtask';
+import { Subtask } from './components/subtask/subtask';
 import { putToBD, getFromBD, postToBD } from './helpers';
-import Header from '../Header/Header';
 import './Selfcheck.scss';
 
 const { Title } = Typography;
@@ -151,7 +150,6 @@ class Selfcheck extends React.Component {
     const { task, taskScore, isCanBeSubmitted } = this.state;
     return task !== null ? (
       <div className="selfcheck_container">
-        <Header />
         <div className="info_selfcheck__container">
           <Title level={1}>{task.name}</Title>
           <Title level={5}>Все подпункты должны быть оценены</Title>

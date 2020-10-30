@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table } from 'antd';
-import Header from '../../Components/Header/Header';
 import './ReviewRequests.scss';
 
 const sortDate = (a: any, b: any, type: string) => {
@@ -102,7 +101,7 @@ const ReviewRequests: React.FC = () => {
 
   return (
     <div className="review-requests">
-      <Header />
+      <h1>Rewiew Requests</h1>
       <Table columns={columns} dataSource={data} size="large" loading={!data} />
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../Header/Header';
 import TaskForm from './TaskForm/TaskForm';
 import classes from './TasksCreator.module.scss';
 
@@ -15,8 +14,7 @@ const TasksCreator: React.FC = () => {
 
   return (
     <div className={classes.tasksCreator}>
-      <Header />
-      <h1 style={{ marginLeft: '15px', marginRight: '15px' }}>Task Creator</h1>
+      <h1>Task Creator</h1>
       <TaskForm editTaskMode={editTaskMode} editTaskName={editTaskName} />
     </div>
   );

@@ -16,7 +16,6 @@ import {
   User,
 } from '../../Reducer/reducer';
 import './TaskReview.scss';
-import Header from '../Header/Header';
 import Hoc from '../Hoc/Hoc';
 import Service from '../../Service/Service';
 import { RootState } from '../../Store/Store';
@@ -115,8 +114,7 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
 
   return (
     <div id="task-review">
-      <Header />
-
+      <h1>Task Review</h1>
       <Select className="task-review-select" onChange={onTaskSelect}>
         {Object.entries(crossCheckSessions)
           .filter(([key, elem]) => {

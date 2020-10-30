@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import { Row, Col } from 'antd';
 import Navbar from './Navbar/Navbar';
-import Header from '../../Components/Header/Header';
-import SessionsList from '../../Components/CheckSession/SessionsList/SessionsList';
-import Auth from '../../Components/Auth/Auth';
-import CheckSession from '../../Components/CheckSession/CheckSession';
-import DisputeSelector from '../../Components/Dispute/DisputeSelector/DisputeSelector';
-import TasksList from '../../Components/TasksList/TasksList';
-import Selfcheck from '../../Components/Selfcheck/Selfcheck';
-import { TaskReview } from '../../Components/TaskReview/TaskReview';
-import SelectingTask from '../../Components/SelectingTask/SelectingTask';
-import TasksCreator from '../../Components/TasksCreator/TasksCreator';
+import Header from '../Header/Header';
+import SessionsList from '../CheckSession/SessionsList/SessionsList';
+import Auth from '../Auth/Auth';
+import CheckSession from '../CheckSession/CheckSession';
+import DisputeSelector from '../Dispute/DisputeSelector/DisputeSelector';
+import TasksList from '../TasksList/TasksList';
+import Selfcheck from '../Selfcheck/Selfcheck';
+import { TaskReview } from '../TaskReview/TaskReview';
+import SelectingTask from '../SelectingTask/SelectingTask';
+import TasksCreator from '../TasksCreator/TasksCreator';
 import Score from '../Score/Score';
 import ReviewRequests from '../ReviewRequests/ReviewRequests';
 
@@ -31,7 +31,7 @@ const Main: React.FC = () => {
         <Col>
           <Navbar />
         </Col>
-        <Col flex="auto">
+        <Col flex="1 1 300px">
           <Switch>
             <Route path="/checksession/list" component={SessionsList} />
             <Route path="/authorization" component={Auth} />

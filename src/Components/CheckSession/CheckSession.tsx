@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Modal, Form, Radio, InputNumber, DatePicker, Select } from 'antd';
-import Header from '../Header/Header';
 import Hoc from '../Hoc/Hoc';
 import getFromDB from '../../Service/getFromDB';
 import classes from './CheckSession.module.scss';
@@ -174,7 +173,6 @@ const CrossCheck: React.FC = () => {
 
   return (
     <div className={classes.CrossCheck}>
-      <Header className={classes.CrossCheck__Header} />
       <div className={classes.CrossCheck__SelectTask}>
         <Select
           showSearch

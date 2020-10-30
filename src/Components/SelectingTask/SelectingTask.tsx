@@ -3,7 +3,6 @@ import { Alert, Button, Menu, Dropdown, Spin } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import Header from '../Header/Header';
 import { changeSelectedTaskId } from '../../Actions/Actions';
 import './SelectingTask.scss';
 
@@ -117,8 +116,8 @@ const SelectingTask: React.FC = () => {
 
   return (
     <div className="selecting-task">
-      <Header />
       <div className="selecting-task__info">
+        <h1>Submit Task</h1>
         <h3 className="selecting-task__task-name">
           <span className="star">*</span>
           Task

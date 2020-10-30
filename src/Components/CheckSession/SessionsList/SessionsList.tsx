@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, DatePicker, Form, InputNumber, Modal, Radio, Switch } from 'antd';
 import { useHistory } from 'react-router-dom';
-import Header from '../../Header/Header';
 import Hoc from '../../Hoc/Hoc';
 import getFromBD from '../../../Service/getFromDB';
 import classes from '../CheckSession.module.scss';
@@ -276,9 +275,7 @@ const SessionsList = () => {
 
   return (
     <div className={classes.CrossCheck}>
-      <Header className={classes.CrossCheck__Header} />
       <div className={classes.CrossCheck__List}>{renderCards()}</div>
-
       <div className={classes.CrossCheck__Buttons}>
         <Button type="primary" onClick={() => getSessionList()}>
           Refresh session list

@@ -1,10 +1,11 @@
 .logo {
-  background-image: url('./rsimg.png');
+  background-image: url('./rsimg2.png');
   background-size: cover;
   background-repeat: no-repeat;
   box-sizing: border-box;
-  width: 83.36px;
-  height: 30px;
+  width: 100px;
+  height: 88px;
+  margin-left: 10px;
 }
 
 header {
@@ -15,7 +16,7 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 15px;
+  padding: 15px;
 }
 
 .profile {

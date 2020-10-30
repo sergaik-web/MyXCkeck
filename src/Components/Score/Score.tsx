@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Button } from 'antd';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import Header from '../../Components/Header/Header';
 import { changeReview } from '../../Actions/Actions';
 import './Score.scss';
 
@@ -132,7 +131,7 @@ const Score: React.FC = () => {
 
   return (
     <div className="score">
-      <Header />
+      <h1>Score</h1>
       <Table columns={columns} dataSource={data} size="large" loading={!data} />
     </div>
   );

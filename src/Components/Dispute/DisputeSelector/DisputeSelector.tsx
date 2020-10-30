@@ -4,7 +4,6 @@ import { Col, Dropdown, Menu, message, Row } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import classes from './disputeSelector.module.scss';
-import Header from '../../Header/Header';
 import getFromDB from '../../../Service/getFromDB';
 import postToDB from '../../../Service/postToDB';
 import { DISPUTE_SELECT } from '../../../Actions/actionTypes';
@@ -132,7 +131,7 @@ const DisputeSelector = (props: any) => {
 
   return (
     <div className={classes.layout}>
-      <Header />
+      <h1>Dispute</h1>
       {isDisputeSelectActive ? (
         disputeSelector
       ) : (
