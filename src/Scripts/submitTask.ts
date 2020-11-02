@@ -1,5 +1,6 @@
 import { message, Modal } from 'antd';
 import createEssence from './createEssenceTask';
+import { putTask, postNewTask } from '../Service/Service';
 
 const { confirm } = Modal;
 
@@ -8,14 +9,15 @@ const submitTask = (
   valueMde: any,
   editMode: boolean | undefined,
   editName: string | undefined,
-  service: any,
   setEditMode: any,
   setEditName: any,
-  history: any
+  history: any,
+  icon: any
 ) => {
   if (values.tasks || values.tasks.lenght === 0) {
     confirm({
       title: 'Back to the list of tasks?',
+      icon,
       content: 'Do you want to go back to the full list of all assignments, or continue editing?',
       okText: 'Back to Tasks List',
       cancelText: 'Continue Editing',
@@ -23,9 +25,9 @@ const submitTask = (
         const description = valueMde.value();
         const taskEssence = createEssence(values, description);
         if (editMode) {
-          service.putTask(taskEssence, editName);
+          putTask(taskEssence, editName);
         } else {
-          service.postNewTask(taskEssence).then((e: any) => {
+          postNewTask(taskEssence).then((e: any) => {
             setEditMode(true);
             setEditName(e.name);
           });
@@ -36,9 +38,9 @@ const submitTask = (
         const description = valueMde.value();
         const taskEssence = createEssence(values, description);
         if (editMode) {
-          service.putTask(taskEssence, editName);
+          putTask(taskEssence, editName);
         } else {
-          service.postNewTask(taskEssence).then((e: any) => {
+          postNewTask(taskEssence).then((e: any) => {
             setEditMode(true);
             setEditName(e.name);
           });

@@ -61,7 +61,7 @@ function normalizeCheckSession(session: CrossCheckSession) {
   return session;
 }
 
-const postNewTask = async (data: Task) => {
+const postNewTask = async (data: any) => {
   return db
     .ref('/tasks')
     .push(data)
@@ -74,7 +74,7 @@ const postNewTask = async (data: Task) => {
     });
 };
 
-const putTask = async (data: Task, taskName: string) => {
+const putTask = async (data: any, taskName: string | undefined) => {
   return db
     .ref(`/tasks/${taskName}`)
     .set(data)
