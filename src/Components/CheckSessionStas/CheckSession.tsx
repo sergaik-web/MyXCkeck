@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Button, Form, Input, message, Select } from 'antd';
 import uniqueBy from 'lodash/uniqBy';
-import Hoc from '../Hoc/Hoc';
-import Service from '../../Service/Service';
 import {
   CrossCheckSession,
   CrossCheckSessionStates,
@@ -14,12 +12,19 @@ import {
 } from '../../Reducer/reducer';
 import Header from '../Header/Header';
 import './CheckSession.scss';
+import {
+  getCheckSession,
+  getAllTasks,
+  getAllUsers,
+  putCheckSession,
+  postCheckSession,
+} from '../../Service/Service';
 
 const DEFAULT_SESSION_DURATION_IN_DAYS = 14;
 const { Item: FormItem } = Form;
 const { Option } = Select;
 
-export const CheckSession: React.FC = Hoc()(({ service }: { service: Service }) => {
+const CheckSession: React.FC = () => {
   const { sessionId } = useParams() as { sessionId: string };
   const [checkSession, setCheckSession] = useState<CrossCheckSession>({
     name: '',
@@ -43,13 +48,13 @@ export const CheckSession: React.FC = Hoc()(({ service }: { service: Service }) 
 
   useEffect(() => {
     if (sessionId) {
-      service
-        .getCheckSession(sessionId)
-        .then((foundCheckSession) => setCheckSession(foundCheckSession as CrossCheckSession));
+      getCheckSession(sessionId).then((foundCheckSession: any) =>
+        setCheckSession(foundCheckSession as CrossCheckSession)
+      );
     }
-    service.getAllTasks().then((allTasks) => setTasks(allTasks as Tasks));
-    service.getAllUsers().then((allUsers) => setUsers(allUsers as Users));
-  }, [sessionId, service]);
+    getAllTasks().then((allTasks: any) => setTasks(allTasks as Tasks));
+    getAllUsers().then((allUsers: any) => setUsers(allUsers as Users));
+  }, [sessionId]);
   const onNameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setCheckSession({
@@ -106,15 +111,15 @@ export const CheckSession: React.FC = Hoc()(({ service }: { service: Service }) 
 
   const onSave = useCallback(() => {
     if (sessionId) {
-      service.putCheckSession(sessionId, checkSession).then(() => {
+      putCheckSession(sessionId, checkSession).then(() => {
         message.success('check session updated');
       });
     } else {
-      service.postCheckSession(checkSession).then(() => {
+      postCheckSession(checkSession).then(() => {
         message.success('check session created');
       });
     }
-  }, [checkSession, sessionId, service]);
+  }, [checkSession, sessionId]);
 
   if (sessionId && !checkSession.name) {
     return null;
@@ -187,4 +192,6 @@ export const CheckSession: React.FC = Hoc()(({ service }: { service: Service }) 
       </Form>
     </div>
   );
-});
+};
+
+export default CheckSession;

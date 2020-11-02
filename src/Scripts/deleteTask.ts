@@ -1,9 +1,10 @@
 import { Modal } from 'antd';
 import updateTaskList from './updateTaskList';
+import { delTask } from '../Service/Service';
 
 const { confirm } = Modal;
 
-const deleteTask = (service: any, taskName: any, setAllTask: any, icon: any) => {
+const deleteTask = (taskName: any, setAllTask: any, icon: any) => {
   confirm({
     title: 'Are you sure delete this task?',
     icon,
@@ -12,9 +13,7 @@ const deleteTask = (service: any, taskName: any, setAllTask: any, icon: any) => 
     okType: 'danger',
     cancelText: 'No',
     onOk() {
-      service
-        .delTask(taskName)
-        .then(() => setTimeout(() => updateTaskList(service, setAllTask), 1500));
+      delTask(taskName).then(() => setTimeout(() => updateTaskList(setAllTask), 1500));
     },
   });
 };

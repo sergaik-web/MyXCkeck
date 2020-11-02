@@ -1,14 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Button, message } from 'antd';
-import Hoc from '../Hoc/Hoc';
-import Service from '../../Service/Service';
 import { Task, TaskItem, TaskScore } from '../../Reducer/reducer';
 import { TaskReviewForm } from './TaskForm';
 import { getTaskCategories } from './getTaskCategories';
 import Header from '../Header/Header';
+import {
+  getTask,
+  getTaskScoreByRequestId,
+  putTaskScore,
+  postTaskScore,
+} from '../../Service/Service';
 
-export const SelfCheck: React.FC = Hoc()(({ service }: { service: Service }) => {
+const SelfCheck: React.FC = () => {
   const { taskId, reviewRequestId } = useParams();
   const [foundTaskScore, setFoundTaskScore] = useState(false);
   const [task, setTask] = useState<Task>({ subTasks: [] as TaskItem[] } as Task);
@@ -18,9 +22,8 @@ export const SelfCheck: React.FC = Hoc()(({ service }: { service: Service }) => 
   } as TaskScore);
 
   useEffect(() => {
-    service
-      .getTask(taskId)
-      .then((foundTask) => {
+    getTask(taskId)
+      .then((foundTask: any) => {
         setTask(foundTask as Task);
         setTaskScore({
           ...taskScore,
@@ -32,7 +35,7 @@ export const SelfCheck: React.FC = Hoc()(({ service }: { service: Service }) => 
         });
       })
       .then(() => {
-        service.getTaskScoreByRequestId(reviewRequestId).then((taskScoreFromBD) => {
+        getTaskScoreByRequestId(reviewRequestId).then((taskScoreFromBD: any) => {
           setFoundTaskScore(true);
           setTaskScore(taskScoreFromBD as TaskScore);
         });
@@ -59,16 +62,16 @@ export const SelfCheck: React.FC = Hoc()(({ service }: { service: Service }) => 
   };
   const onSave = useCallback(() => {
     if (foundTaskScore) {
-      service.putTaskScore(taskScore.id as string, taskScore).then(() => {
+      putTaskScore(taskScore.id as string, taskScore).then(() => {
         message.success('task score updated');
       });
     } else {
-      service.postTaskScore(taskScore).then(() => {
+      postTaskScore(taskScore).then(() => {
         setFoundTaskScore(true);
         message.success('task score created');
       });
     }
-  }, [foundTaskScore, taskScore, service]);
+  }, [foundTaskScore, taskScore]);
 
   return (
     <div id="task-review">
@@ -87,4 +90,6 @@ export const SelfCheck: React.FC = Hoc()(({ service }: { service: Service }) => 
       </Button>
     </div>
   );
-});
+};
+
+export default SelfCheck;

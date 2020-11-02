@@ -6,18 +6,16 @@ const { confirm } = Modal;
 const submitTask = (
   values: any,
   valueMde: any,
-  editMode: boolean,
-  editName: string,
+  editMode: boolean | undefined,
+  editName: string | undefined,
   service: any,
   setEditMode: any,
   setEditName: any,
-  history: any,
-  icon: any
+  history: any
 ) => {
   if (values.tasks || values.tasks.lenght === 0) {
     confirm({
       title: 'Back to the list of tasks?',
-      icon,
       content: 'Do you want to go back to the full list of all assignments, or continue editing?',
       okText: 'Back to Tasks List',
       cancelText: 'Continue Editing',

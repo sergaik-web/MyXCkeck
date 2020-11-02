@@ -3,7 +3,7 @@ import TaskForm from './TaskForm/TaskForm';
 import classes from './TasksCreator.module.scss';
 
 const TasksCreator: React.FC = () => {
-  let editTaskName: string | boolean = false;
+  let editTaskName: string = '';
   let editTaskMode: boolean = false;
 
   if (window.location.pathname !== '/task-create') {

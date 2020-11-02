@@ -11,7 +11,6 @@ import TaskMainInfo from '../TaskMainInfo/TaskMainInfo';
 import TaskDescription from '../TaskDescription/TaskDescription';
 import TaskSubTasks from '../TaskSubTasks/TaskSubTasks';
 import TaskSubmitButton from '../TaskSubmitButton/TaskSubmitButton';
-import Hoc from '../../Hoc/Hoc';
 
 import classes from './TaskForm.module.scss';
 import 'antd/dist/antd.css';
@@ -20,12 +19,11 @@ import 'easymde/dist/easymde.min.css';
 interface TasksFormProps {
   editTaskMode: boolean;
   editTaskName: string;
-  service: any;
 }
 
 const TaskForm: React.FC<TasksFormProps> = (props) => {
   const history = useHistory();
-  const { service, editTaskMode, editTaskName } = props;
+  const { editTaskMode, editTaskName } = props;
   const [form] = Form.useForm();
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -42,23 +40,13 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
 
   useEffect(() => {
     if (editMode && editName) {
-      fillTaskForm(service, editName, setTask, form);
+      fillTaskForm(editName, setTask, form);
     }
-  }, [editMode, editName, service, form]);
+  }, [editMode, editName, form]);
 
   const onFinish = (values: { [key: string]: any }) => {
     const icon = <ExclamationCircleOutlined />;
-    submitTask(
-      values,
-      valueMde,
-      editMode,
-      editName,
-      service,
-      setEditMode,
-      setEditName,
-      history,
-      icon
-    );
+    submitTask(values, valueMde, editMode, editName, setEditMode, setEditName, history, icon);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -125,4 +113,4 @@ const TaskForm: React.FC<TasksFormProps> = (props) => {
   );
 };
 
-export default Hoc()(TaskForm);
+export default TaskForm;

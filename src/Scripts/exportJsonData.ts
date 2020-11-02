@@ -1,7 +1,7 @@
 import { message, Modal } from 'antd';
 import createEssence from './createEssenceTask';
 
-const exportJsonData = (editMode: boolean, valueMde: any, form: any) => {
+const exportJsonData = (editMode: undefined | boolean, valueMde: any, form: any) => {
   if (editMode) {
     const description = valueMde.value();
     const formValues = form.getFieldsValue();

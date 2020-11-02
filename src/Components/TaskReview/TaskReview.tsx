@@ -16,15 +16,22 @@ import {
   User,
 } from '../../Reducer/reducer';
 import './TaskReview.scss';
-import Hoc from '../Hoc/Hoc';
-import Service from '../../Service/Service';
 import { RootState } from '../../Store/Store';
 import { TaskReviewForm } from './TaskForm';
 import { getTaskCategories } from './getTaskCategories';
+import {
+  getAllCheckSessions,
+  getAllTasks,
+  getReviewRequestBySessionId,
+  getTaskScoreByRequestId,
+  getReviewByTaskScoreId,
+  putTaskReview,
+  postTaskReview,
+} from '../../Service/Service';
 
 const { Option } = Select;
 
-export const TaskReview: React.FC = Hoc()(({ ...params }) => {
+export const TaskReview: React.FC = () => {
   const [task, setTask] = useState<Task>({
     name: '',
     taskId: '',
@@ -33,7 +40,7 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
     categoriesOrder: [],
     subTasks: [],
   });
-  const { service } = params as { service: Service };
+
   const [tasks, setTasks] = useState<Tasks>({});
   const user = useSelector<RootState>((state) => state.user) as User;
   const [review, setReview] = useState<Review>({
@@ -46,13 +53,11 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
   const [foundReview, setFoundReview] = useState(false);
 
   useEffect(() => {
-    service.getAllTasks().then((response) => setTasks(response as Tasks));
-    service
-      .getAllCheckSessions()
-      .then((allCrossCheckSessions) =>
-        setCrossCheckSessions(allCrossCheckSessions as CrossCheckSessions)
-      );
-  }, [service]);
+    getAllTasks().then((response) => setTasks(response as Tasks));
+    getAllCheckSessions().then((allCrossCheckSessions) =>
+      setCrossCheckSessions(allCrossCheckSessions as CrossCheckSessions)
+    );
+  }, [getAllTasks, getAllCheckSessions]);
 
   const onTaskSelect = useCallback(
     (sessionId: string) => {
@@ -60,23 +65,21 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
       const taskId = crossCheckSessions[sessionId].taskId;
       const selectedTask = tasks[taskId];
       setTask(selectedTask);
-      service.getReviewRequestBySessionId(sessionId).then((reviewRequest) => {
-        service.getTaskScoreByRequestId((reviewRequest as ReviewRequest).id).then((taskScore) => {
+      getReviewRequestBySessionId(sessionId).then((reviewRequest) => {
+        getTaskScoreByRequestId((reviewRequest as ReviewRequest).id).then((taskScore) => {
           setReview({
             ...review,
             taskScoreId: String((taskScore as TaskScore).id),
             subTasks: (taskScore as TaskScore).subTasks,
           });
-          service
-            .getReviewByTaskScoreId(String((taskScore as TaskScore).id))
-            .then((reviewFromBD) => {
-              setFoundReview(true);
-              setReview(reviewFromBD as Review);
-            });
+          getReviewByTaskScoreId(String((taskScore as TaskScore).id)).then((reviewFromBD) => {
+            setFoundReview(true);
+            setReview(reviewFromBD as Review);
+          });
         });
       });
     },
-    [setTask, tasks, setReview, review, crossCheckSessions, service]
+    [setTask, tasks, setReview, review, crossCheckSessions]
   );
 
   const categories = getTaskCategories(task, review);
@@ -101,16 +104,16 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
 
   const onSubmit = useCallback(() => {
     if (foundReview) {
-      service.putTaskReview(String(review.id), review).then(() => {
+      putTaskReview(String(review.id), review).then(() => {
         message.success('review updated');
       });
     } else {
-      service.postTaskReview(review).then(() => {
+      postTaskReview(review).then(() => {
         setFoundReview(true);
         message.success('review created');
       });
     }
-  }, [review, service, foundReview]);
+  }, [review, foundReview]);
 
   return (
     <div id="task-review">
@@ -142,4 +145,4 @@ export const TaskReview: React.FC = Hoc()(({ ...params }) => {
       </Button>
     </div>
   );
-});
+};

@@ -4,26 +4,24 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import deleteTask from '../../Scripts/deleteTask';
 import updateTaskList from '../../Scripts/updateTaskList';
 import TasksTable from './TaskTable/TaskTable';
-import Hoc from '../Hoc/Hoc';
 import classes from './TasksList.module.scss';
 
 interface allTasksType {
-  service: any;
   userName: string | null;
   userRole: [string];
 }
 
 const TasksList: React.FC<allTasksType> = (props) => {
-  const { service, userName, userRole } = props;
+  const { userName, userRole } = props;
   const [allTasks, setAllTask] = useState();
 
   useEffect(() => {
-    updateTaskList(service, setAllTask);
-  }, [service, setAllTask]);
+    updateTaskList(setAllTask);
+  }, [setAllTask]);
 
   const onDeleteTask: any = (taskName: any) => {
     const icon = <ExclamationCircleOutlined />;
-    deleteTask(service, taskName, setAllTask, icon);
+    deleteTask(taskName, setAllTask, icon);
   };
 
   return (
@@ -46,4 +44,4 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-export default connect(mapStateToProps)(Hoc()(TasksList));
+export default connect(mapStateToProps)(TasksList);

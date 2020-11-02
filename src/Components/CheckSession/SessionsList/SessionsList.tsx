@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, DatePicker, Form, InputNumber, Modal, Radio, Switch } from 'antd';
 import { useHistory } from 'react-router-dom';
-import Hoc from '../../Hoc/Hoc';
 import getFromBD from '../../../Service/getFromDB';
 import classes from '../CheckSession.module.scss';
 import patchBD from '../../../Service/patchDB';
@@ -296,4 +295,4 @@ const SessionsList = () => {
   );
 };
 
-export default Hoc()(SessionsList);
+export default SessionsList;

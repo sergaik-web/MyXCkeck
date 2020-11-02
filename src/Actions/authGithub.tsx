@@ -1,13 +1,11 @@
 import { AUTH_GITHUB_SUCCESS } from './actionTypes';
-import Service from '../Service/Service';
+import { postNewUser } from '../Service/Service';
 
 const querystring = require('querystring');
 
 const CLIENT_ID = 'd43d3462daea6d3d036f';
 const CLIENT_SECRET = 'ec5ddb95eac2cbb6f28c31c543dc3fce70bf6d8f';
 const REDIRECT_URL = 'https://xcheck-team32.netlify.app/authorization/callback';
-
-const service = new Service();
 
 export function authGithubSuccess(user: Object) {
   return {
@@ -46,7 +44,7 @@ export function authGithub(userRole: any) {
       role: roles,
     };
 
-    await service.postNewUser(user);
+    await postNewUser(user);
 
     localStorage.setItem('userName', user.userName);
     localStorage.setItem('githubId', user.githubId);

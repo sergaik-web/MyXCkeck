@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Modal, Form, Radio, InputNumber, DatePicker, Select } from 'antd';
-import Hoc from '../Hoc/Hoc';
 import getFromDB from '../../Service/getFromDB';
 import classes from './CheckSession.module.scss';
 import postToBD from '../../Service/postToDB';
@@ -219,4 +218,4 @@ const CrossCheck: React.FC = () => {
   );
 };
 
-export default Hoc()(CrossCheck);
+export default CrossCheck;

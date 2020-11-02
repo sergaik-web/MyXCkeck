@@ -1,5 +1,7 @@
-const updateTaskList = (service: any, setAllTask: any) => {
-  service.getAllTasks().then((allTasks: any) => {
+import { getAllTasks } from '../Service/Service';
+
+const updateTaskList = (setAllTask: any) => {
+  getAllTasks().then((allTasks: any) => {
     if (allTasks) {
       const keys = Object.keys(allTasks);
       const arrTasks: any = keys.map((key) => {

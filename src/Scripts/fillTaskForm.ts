@@ -1,5 +1,7 @@
-const fillTaskForm = (service: any, editName: string, setTask: any, form: any) => {
-  service.getTask(editName).then((e: any) => {
+import { getTask } from '../Service/Service';
+
+const fillTaskForm = (editName: string, setTask: any, form: any) => {
+  getTask(editName).then((e: any) => {
     setTask(e);
     form.setFieldsValue({
       taskName: e.name,

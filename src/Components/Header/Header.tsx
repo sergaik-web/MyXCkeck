@@ -6,7 +6,11 @@ import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import './Header.scss';
 
-const Header = (props: any) => {
+interface headerPropsTypes {
+  user: string;
+}
+
+const Header: React.FC<headerPropsTypes> = (props) => {
   const { user } = props;
   const history = useHistory();
   return (
@@ -17,7 +21,7 @@ const Header = (props: any) => {
       <b>X-Check</b>
       <div className="profile">
         <Avatar size={30} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-        <p style={{ marginRight: '15px' }}>{user.userName}</p>
+        <p style={{ marginRight: '15px' }}>{user}</p>
         <Button
           type="primary"
           onClick={() => history.push('/authorization')}
